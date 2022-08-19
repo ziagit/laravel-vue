@@ -19,3 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post("send", "MailController2@send");
+
+Route::get("users", "AuthController@users");
+
+Route::post('login', 'AuthController@login');
+Route::post('logout', 'AuthController@logout');
+
+
+Route::post('upload-file', 'FileController2@upload');
+Route::post('remove-file', 'FileController2@remove');

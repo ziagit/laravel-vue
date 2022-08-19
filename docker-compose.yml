@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  moving-php:
+    build:
+      args:
+        user: www-data
+        uid: 1000
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - '7100:80'
+    volumes:
+      - ./:/var/www/html
+      - ./apache.conf:/etc/apache2/sites-enabled/000-default.conf
+    depends_on:
+      - moving_mysql
+    environment:
+      - TZ=Asia/Kabul
+    networks:
+      - moving-web
+
+  moving-node:
+    image: "node:10"
+    user: "node"
+    working_dir: /home/app
+    volumes:
+      - ./:/home/app
+    ports:
+      - "7102:3000"
+      - "3000:3000"
+    expose:
+      - 3000
+    command: bash -c "npm install && npm run watch"
+    networks:
+      - moving-web
+
+  moving_mysql:
+    image: 'mysql:8.0'
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - moving-web
+    ports:
+      - "7101:3306"
+
+volumes:
+  db-data:
+
+networks:
+  moving-web:
+    driver: bridge
