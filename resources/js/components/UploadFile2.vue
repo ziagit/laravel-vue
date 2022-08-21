@@ -4,6 +4,9 @@
             <input type="file" @change="onChange" />
             <b-button @click="upload()">Upload</b-button>
             <b-button @click="remove()">Remove</b-button>
+
+            <img squar :src="'/storage/files/logo.png'" alt="No image" size="lg" />
+
         </b-form>
     </div>
 </template>
@@ -17,10 +20,8 @@ export default {
     methods: {
         onChange(e) {
             this.file = e.target.files[0];
-            console.log("file ", this.file)
         },
         upload() {
-            console.log("original file: ", this.file);
             if (this.isLt2MB(this.file)) {
                 this.uploadWithoutCompressing(this.file)
                 return;

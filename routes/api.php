@@ -26,5 +26,5 @@ Route::post('login', 'AuthController@login');
 Route::post('logout', 'AuthController@logout');
 
 
-Route::post('upload-file', 'FileController2@upload');
-Route::post('remove-file', 'FileController2@remove');
+Route::post('upload-file', 'FileUpload3@upload');
+Route::post('remove-file', 'FileUpload3@remove');

@@ -4,7 +4,7 @@ services:
   moving-php:
     build:
       args:
-        user: www-data
+        user: dev
         uid: 1000
       context: .
       dockerfile: dockerfile
