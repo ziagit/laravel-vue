@@ -46,7 +46,7 @@ export default {
             }).catch(err => console.log(err.response))
         },
         submit() {
-            axios.post("http://localhost:8000/api/login", this.form).then(res => {
+            axios.post("api/test", this.form).then(res => {
                 console.log("token:‌", res.data)
             }).catch(err => console.log(err.response))
         }
