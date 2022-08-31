@@ -18,16 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post("send", "MailController2@send");
+//Route::post("send", "MailController2@send");
 
-Route::get("users", "AuthController@users");
+//Route::get("users", "AuthController@users");
 
 //Route::post('login', 'AuthController@login');
 //Route::post('logout', 'AuthController@logout');
 
-Route::post("test", "TestController@test");
 
-Route::post('upload-file', 'FileUpload3@upload');
-Route::post('remove-file', 'FileUpload3@remove');
+//Route::post('upload-file', 'FileUpload3@upload');
+//Route::post('remove-file', 'FileUpload3@remove');
 
-Route::post('login', 'JWTController@login');
+Route::post('signin', 'AuthController@login');
+Route::post('register', 'AuthController@register');
+Route::get('me', 'AuthController@me');
+
+Route::post('signout', 'AuthController@logout');

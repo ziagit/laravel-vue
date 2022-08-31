@@ -5,9 +5,8 @@
  */
 
 require('./bootstrap');
-
+import router from "./routes.js";
 window.Vue = require('vue');
-
 
 //custome imports
 // Import Bootstrap and BootstrapVue CSS files (order is important)
@@ -26,10 +25,16 @@ Vue.use(IconsPlugin)
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
+require("./store/subscriber");
 
+import store from "./store";
+import axios from "axios";
+
+
+axios.defaults.baseURL = "http://localhost:8000/api/";
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('example-component', require('./components/Login.vue').default);
+Vue.component('example-component', require('./components/HomeComponent.vue').default);
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 //Vue.component('example-component', require('./components/UploadFile2.vue').default);
@@ -41,6 +46,10 @@ Vue.component('example-component', require('./components/Login.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
+store.dispatch("auth/attempt", localStorage.getItem("token")).then(() => {
+    const app = new Vue({
+        el: "#app",
+        router,
+        store,
+    });
 });
