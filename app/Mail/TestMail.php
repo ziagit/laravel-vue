@@ -3,14 +3,13 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 class TestMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+    public $message;
     /**
      * Create a new message instance.
      *
@@ -18,7 +17,7 @@ class TestMail extends Mailable
      */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->message = $data;
     }
 
     /**
@@ -30,7 +29,7 @@ class TestMail extends Mailable
     {
         return $this->from('hmjffas100@gmail.com')
             ->subject('Test email')
-            ->with(['Hello, bro'])
+            ->with(["msg"=>$this->message])
             ->view('mail');
     }
 }

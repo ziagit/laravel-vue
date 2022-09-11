@@ -4,54 +4,51 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Exception;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-
-    public function login(Request $request)
+    public function register(Request $request)
     {
-        $credentials = $request->only('email', 'password');
         try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json("Faild to create token", 500);
-            }
-            return response()->json($token);
-        } catch (JWTException $e) {
+            $request->validate(([
+                'name' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:3',
+                'comfirm_password' => 'required|same:password'
+            ]));
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return response()->json("Registered successfuly.");
+        } catch (Exception $e) {
             return response()->json($e->getMessage());
         }
     }
-    public function register(Request $request)
+    public function login(Request $request)
     {
-        // try {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:3',
-            'password_confirm' => 'required|same:password'
-        ]);
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
-        return response()->json("Saved successfuly.");
-        // } catch (Exception $e) {
-        //     return response()->json($e->getMessage());
-        // }
+        try {
+            $credentials = $request->only('email', 'password');
+            if ($token = JWTAuth::attempt($credentials)) {
+                return response()->json($token);
+            }
+            return response()->json("Could not create token");
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
-    public function me()
-    {
-        return JWTAuth::user();
-    }
-    public function logOut()
+    public function logout()
     {
         $forever = true;
         JWTAuth::parseToken()->invalidate($forever);
-        return response()->json("Log out success.");
+        return response()->json("Loged out.");
+    }
+    public function me()
+    {
+        return response()->json(JWTAuth::user());
     }
 }

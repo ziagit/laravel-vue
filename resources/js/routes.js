@@ -2,9 +2,8 @@ window.Vue = require("vue");
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
-import Dashboard from "./components/auth/Dashboard";
-
+import Register from "./components/auth/Register"
+import Dashboard from "./components/Dashboard"
 
 Vue.use(VueRouter);
 export default new VueRouter({
@@ -12,18 +11,17 @@ export default new VueRouter({
     hash: false,
     routes: [
         {
-            name: 'login',
-            path: '/login',
+            name: 'Login',
+            path: "/login",
             component: Login
+        }, {
+            name: 'Register',
+            path: "/register",
+            component: Register
         },
         {
-            name: 'register',
-            path: '/register',
-            component: Register,
-        },
-        {
-            name: 'dashboard',
-            path: '/dashboard',
+            name: 'Dashboard',
+            path: "/dashboard",
             component: Dashboard
         }
     ]

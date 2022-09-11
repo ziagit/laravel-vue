@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\TestMail;
+use App\Jobs\SendEmail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
     public function send(Request $request)
     {
-        Mail::to('zia.csco@gmail.com')->queue(new TestMail($request->message));
+        dispatch(new SendEmail($request->email, $request->message));
         return response()->json("Emails sent !!!");
     }
 }

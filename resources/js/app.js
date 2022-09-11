@@ -4,20 +4,19 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-import router from "./routes.js";
-window.Vue = require('vue');
-
+require("./bootstrap");
+window.Vue = require("vue");
+import router from "./routes";
 //custome imports
 // Import Bootstrap and BootstrapVue CSS files (order is important)
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
 
 // Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
+Vue.use(IconsPlugin);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -25,16 +24,17 @@ Vue.use(IconsPlugin)
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-require("./store/subscriber");
-
+require("./store/subcriber");
 import store from "./store";
 import axios from "axios";
-
 
 axios.defaults.baseURL = "http://localhost:8000/api/";
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('example-component', require('./components/HomeComponent.vue').default);
+Vue.component(
+    "example-component",
+    require("./components/EmailComponent.vue").default
+);
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 //Vue.component('example-component', require('./components/UploadFile2.vue').default);

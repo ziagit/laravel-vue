@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::post("send", "MailController2@send");
+Route::post("send", "MailController@send");
 
 //Route::get("users", "AuthController@users");
 
@@ -29,8 +29,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Route::post('upload-file', 'FileUpload3@upload');
 //Route::post('remove-file', 'FileUpload3@remove');
 
-Route::post('signin', 'AuthController@login');
-Route::post('register', 'AuthController@register');
-Route::get('me', 'AuthController@me');
 
-Route::post('signout', 'AuthController@logout');
+
+// Route::post('login', 'AuthController@login');
+
+// Route::post('register', 'AuthController@register');
+
+// Route::group(['middleware' => 'auth:api'], function () {
+
+//     Route::get('me', 'AuthController@me');
+
+//     Route::post('logout', 'AuthController@logout');
+
+//     Route::post('message','NotificationController@newMessage');
+
+// });
